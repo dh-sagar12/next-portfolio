@@ -6,9 +6,9 @@ import { Project, ProjectCategories } from '@/types/commontypes';
 
 
 
-export const metadata = {
-  title: 'Sagar Dhakak-Portfolio'
-}
+// export const metadata = {
+//   title: 'Sagar Dhakak-Portfolio'
+// }
 
 const Portfolio: React.FC= () => {
 

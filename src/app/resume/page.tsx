@@ -7,9 +7,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { Certification, CodingSkills, Education, Experience } from '@/types/commontypes';
 
 
-export const metadata = {
-  title: 'Sagar Dhakak-Resume'
-}
+// export const metadata = {
+//   title: 'Sagar Dhakak-Resume'
+// }
 
 const Resume = () => {
 

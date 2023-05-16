@@ -6,9 +6,9 @@ import Head from "next/head";
 import Typewriter from "typewriter-effect"
 
 
-export const metadata = {
-  title: 'Sagar Dhakak-Blog'
-}
+// export const metadata = {
+//   title: 'Sagar Dhakak-Blog'
+// }
 
 const Blog = () => {
   return (

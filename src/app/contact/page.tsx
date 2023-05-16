@@ -10,9 +10,9 @@ import { blue, grey } from '@mui/material/colors'
 
 
 
-export const metadata = {
-  title: 'Sagar Dhakak-Contact'
-}
+// export const metadata = {
+//   title: 'Sagar Dhakak-Contact'
+// }
 
 const Contact = () => {
 

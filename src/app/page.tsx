@@ -5,9 +5,9 @@ import React from "react"
 // import Typewriter from "typewriter-effect"
 
 
-export const metadata = {
-  title: 'Sagar Dhakal-Home'
-}
+// export const metadata = {
+//   title: 'Sagar Dhakal-Home'
+// }
 
 export default function Home() {
   return (

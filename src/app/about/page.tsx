@@ -15,9 +15,9 @@ import { Navigation, Virtual } from "swiper";
 
 
 
-export const metadata = {
-  title: 'Sagar Dhakak-About'
-}
+// export const metadata = {
+//   title: 'Sagar Dhakak-About'
+// }
 
 const About = () => {
 
