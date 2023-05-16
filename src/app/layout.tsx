@@ -1,7 +1,9 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import Sidebar from '@/components/Sidebar'
+import InfoSection from '@/components/InfoSection'
+import "swiper/swiper.min.css";
 
-const inter = Inter({ subsets: ['latin'] })
+
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,7 +17,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className='flex bg-[#222222] text-[#F5F4F4] '>
+        <div className='w-[100px] '>
+          <Sidebar />
+        </div>
+        <div className=' bg-[#444444] w-[570px]'>
+          <InfoSection />
+        </div>
+        <div className='h-screen overflow-scroll overflow-x-hidden w-full'>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

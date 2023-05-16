@@ -1,8 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;1,100&display=swap");
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -14,8 +15,8 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
-
+} */
+/* 
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -24,4 +25,79 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+} */
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* scroll bar styling  */
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  max-height: 100px;
+}
+::-webkit-scrollbar:hover {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track:hover {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 9px;
+  transition: 2ms, all, ease;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #05b4e1;
+  width: 10px;
+}
+
+/*! CSS Used from: https://lmpixels.com/demo/breezycv/darkfw/1/css/reset.css */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/*! CSS Used from: https://lmpixels.com/demo/breezycv/darkfw/1/css/bootstrap-grid.min.css */
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+/*! CSS Used from: https://lmpixels.com/demo/breezycv/darkfw/1/css/main.css */
+.portfolio-grid img {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+.portfolio-grid figure img {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.portfolio-grid figure:hover img {
+  transform: scale(1.1);
 }

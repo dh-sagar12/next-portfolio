@@ -1,34 +1,34 @@
+"use client"
+
+
+import React from 'react'
 import Head from "next/head";
-import React from "react"
-// import Typewriter from "typewriter-effect"
+import Typewriter from "typewriter-effect"
 
 
 export const metadata = {
-  title: 'Sagar Dhakal-Home'
+  title: 'Sagar Dhakak-Blog'
 }
 
-export default function Home() {
+const Blog = () => {
   return (
     <>
-      <Head>
-        <title>Home- Sagar Dhakal</title>
-      </Head>
 
       <div className='  p-60 text-center'>
         <div className="pt-10 pb-3">
-          <p className=' text-6xl  font-bold leading-relaxed '>Sagar Dhakal</p>
+          <p className=' text-6xl  font-bold leading-relaxed '>Blog(ब्लग)</p>
         </div>
 
         <div className='text-[#9E9F9F] text-3xl'>
-          {/* <Typewriter
+          <Typewriter
             onInit={(typewriter) => {
-              typewriter.typeString("Web Developer")
+              typewriter.typeString("")
                 .pauseFor(500)
                 .deleteAll()
-                .typeString("Database Administrator")
+                .typeString("सन्डेआना मस्त नाहा धोके")
                 .pauseFor(500)
                 .deleteAll()
-                .typeString('Python, Javascript, React, SQL')
+                .typeString('तब ब्लग मिलेगा')
                 .pauseFor(500)
                 .start();
             }
@@ -42,9 +42,11 @@ export default function Home() {
               cursor: '.'
 
             }}
-          /> */}
+          />
         </div>
       </div>
     </>
   )
 }
+
+export default Blog
