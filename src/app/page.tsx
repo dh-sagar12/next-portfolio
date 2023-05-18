@@ -2,7 +2,7 @@
 
 import Head from "next/head";
 import React from "react"
-// import Typewriter from "typewriter-effect"
+import Typewriter from "typewriter-effect"
 
 
 // export const metadata = {
@@ -20,9 +20,9 @@ export default function Home() {
         <div className="pt-10 pb-3">
           <p className=' text-6xl  font-bold leading-relaxed '>Sagar Dhakal</p>
         </div>
-
+ 
         <div className='text-[#9E9F9F] text-3xl'>
-          {/* <Typewriter
+          <Typewriter
             onInit={(typewriter) => {
               typewriter.typeString("Web Developer")
                 .pauseFor(500)
@@ -44,7 +44,7 @@ export default function Home() {
               cursor: '.'
 
             }}
-          /> */}
+          />
         </div>
       </div>
     </>

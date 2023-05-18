@@ -101,3 +101,13 @@ img {
 .portfolio-grid figure:hover img {
   transform: scale(1.1);
 }
+
+
+@keyframes spin {
+  to {
+      transform: rotate(360deg);
+  }
+}
+.animate-spin-fast {
+  animation: spin 0.5s linear infinite;
+}

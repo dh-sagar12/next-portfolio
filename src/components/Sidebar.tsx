@@ -20,13 +20,13 @@ const Sidebar: React.FC = () => {
     const navbar: navbar[] = [
         {
             title: 'Home',
-            icon: <TfiHome className='mx-auto'/>,
+            icon: <TfiHome className='mx-auto hover:text-[#0B98BD]'/>,
             path: '/'
 
         }, 
         {
             title: 'About Me',
-            icon: <AiOutlineUser className='mx-auto' />,
+            icon: <AiOutlineUser className='mx-auto hover:text-[#0B98BD]' />,
             path: '/about'
 
         },
@@ -38,19 +38,19 @@ const Sidebar: React.FC = () => {
         },
         {
             title: 'Portfolio',
-            icon: <ImBriefcase className='mx-auto' />,
+            icon: <ImBriefcase className='mx-auto hover:text-[#0B98BD]' />,
             path: '/portfolio'
 
         },
         {
             title: 'Blog',
-            icon: <BiBook className='mx-auto'  />,
+            icon: <BiBook className='mx-auto hover:text-[#0B98BD]'  />,
             path: '/blog'
 
         },
         {
             title: 'Contact',
-            icon: <BsEnvelope className='mx-auto' />,
+            icon: <BsEnvelope className='mx-auto hover:text-[#0B98BD]' />,
             path: '/contact'
 
         }
@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
                                         <span className= {'text-4xl hover:text-[#0B98BD] list-none'} style={ pathname == elem.path? {color: '#0B98BD'} : {color: '#7E8080'}}>
                                             {elem.icon}
                                         </span>
-                                        <p className='text-[#d6d6d6] text-[12px] font-semibold py-1 text-center'>{elem.title}</p>
+                                        <p className='text-[#d6d6d6] text-[12px] hover:text-[#0B98BD]  font-semibold py-1 text-center'>{elem.title}</p>
                                     </Link>
                                 </div>
                         )

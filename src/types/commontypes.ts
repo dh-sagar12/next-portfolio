@@ -72,3 +72,19 @@ export interface  ContacInformation {
     icon : React.ReactNode
     title : string
 }
+
+
+export interface ContactMe {
+    full_name : string, 
+    email: string, 
+    subject: string, 
+    message: string
+}
+
+
+export interface InputError   {
+    emailError :  boolean, 
+    fullNameError: boolean, 
+    messageError : boolean,
+    subjectError: boolean
+  }

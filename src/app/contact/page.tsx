@@ -1,12 +1,13 @@
 "use client"
 
-import { ContacInformation } from '@/types/commontypes'
-import Head from 'next/head'
-import React, { useState, useRef } from 'react'
+import { ContacInformation, ContactMe, InputError } from '@/types/commontypes'
+import React, { useState } from 'react'
 import { BsTelephone, BsEnvelopeAt, BsCheck2Circle } from 'react-icons/bs'
 import { IoLocationOutline } from 'react-icons/io5'
-import { TextField, FormControl, Button, createTheme, ThemeProvider } from "@mui/material";
-import { blue, grey } from '@mui/material/colors'
+import { TextField, createTheme, ThemeProvider, Button } from "@mui/material";
+import axios from 'axios'
+import { ChangeEvent } from 'react'
+import { FaSpinner } from 'react-icons/fa'
 
 
 
@@ -16,27 +17,67 @@ import { blue, grey } from '@mui/material/colors'
 
 const Contact = () => {
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [emailError, setEmailError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
-  const LableRef = useRef()
+const [Loading, setLoading] = useState<boolean>(false)
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const [ContactInformation, setContactInformation] = useState<ContactMe>({
+    email: '',
+    full_name: '',
+    message: '',
+    subject: ''
+  })
+
+  const [InputError, setInputError] = useState<InputError>({
+    emailError: false,
+    fullNameError: false,
+    messageError: false,
+    subjectError: false
+  })
+
+
+  const HandleChangeOnInput = (event: ChangeEvent<HTMLInputElement>) => {
+
+    setContactInformation(prev => (
+      {
+        ...prev, [event.target.name]: event.target.value
+      }
+    ))
+
+  }
+
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault()
 
-    setEmailError(false)
-    setPasswordError(false)
-
-    if (email == '') {
-      setEmailError(true)
+    if (ContactInformation.email == '') {
+      setInputError((prev) => (
+        { ...prev, emailError: true }
+      ))
     }
-    if (password == '') {
-      setPasswordError(true)
+    if (ContactInformation.full_name == '') {
+      setInputError((prev) => (
+        { ...prev, full_name: true }
+      ))
     }
 
-    if (email && password) {
-      console.log(email, password)
+    if (ContactInformation.subject == '') {
+      setInputError((prev) => (
+        { ...prev, subject: true }
+      ))
+    }
+
+    if (ContactInformation.full_name && ContactInformation.email && ContactInformation.subject && ContactInformation.message) {
+      setLoading(true)
+      axios.post('/api/contact', ContactInformation).then(res => {
+        console.log(res.data);
+
+        if (res.status == 201){
+          console.log('SuccesFull');
+          setLoading(false)
+        }
+        else{
+          alert('Mistakeee')
+          setLoading(false)
+        }
+      })
     }
   }
   const contactInformation: ContacInformation[] = [
@@ -134,34 +175,37 @@ const Contact = () => {
 
                     <TextField
                       label="Full Name"
-                      onChange={e => setEmail(e.target.value)}
+                      name='full_name'
+                      onChange={HandleChangeOnInput}
                       required
                       variant="outlined"
                       type="text"
                       sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                       fullWidth
-                      value={email}
-                      error={emailError}
+                      value={ContactInformation.full_name}
+                      error={InputError.fullNameError}
                     />
                     <TextField
                       label="Email"
-                      onChange={e => setEmail(e.target.value)}
+                      name='email'
+                      onChange={HandleChangeOnInput}
                       required
                       variant="outlined"
                       type="text"
                       sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                       fullWidth
-                      value={email}
-                      error={emailError}
+                      value={ContactInformation.email}
+                      error={InputError.emailError}
                     />
                     <TextField
                       label="Subject"
-                      onChange={e => setEmail(e.target.value)}
+                      name='subject'
+                      onChange={HandleChangeOnInput}
                       required
                       variant="outlined"
                       type="text"
-                      value={email}
-                      error={emailError}
+                      value={ContactInformation.subject}
+                      error={InputError.subjectError}
                       fullWidth
                       sx={{ color: 'white', mb: 3, input: { color: '#F5F4F4', padding: '12px' } }}
                     />
@@ -169,12 +213,22 @@ const Contact = () => {
                 </div>
                 <div className='h-full '>
                   <label className='text-[#f5f4f4d3]  text-lg' id='messageLabel'>Message</label>
-                  <textarea name="message" id="message" className='bg-[#222222] outline-none border-[#989998] border rounded-md p-2 focus:border-[#05B4E1] transition-all duration-200 ' required cols={30} rows={6} ></textarea>
+                  <textarea name="message" id="message" className='bg-[#222222] outline-none border-[#989998] border rounded-md p-2 focus:border-[#05B4E1] transition-all duration-200 ' required cols={30} rows={6}
+                    value={ContactInformation.message}
+                    onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+                      setContactInformation(preval => ({ ...preval, message: event.target.value }))
+                    }}
+                  ></textarea>
 
                 </div>
               </div>
 
-            <button type="submit" className='px-10 border transition-all duration-500 py-3 rounded-3xl text-lg font-semibold hover:bg-[#05B4E1] border-[#05B4E1]'>Send Message</button>
+              <button type="submit" className='px-10 border transition-all duration-500 py-3 rounded-3xl text-lg font-semibold hover:bg-[#05B4E1] border-[#05B4E1] cursor-pointer'  disabled={Loading}>
+                <span className='flex space-x-2 justify-center align-middle'>
+                  <FaSpinner  className='h-full my-auto animate-spin-fast text-xl ' style={ Loading ? {display: "block" } : {display: "none"}}/>
+                  <span>Message</span>
+                </span>
+              </button>
             </form>
           </div>
 
