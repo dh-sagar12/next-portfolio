@@ -2,6 +2,8 @@ import './globals.css'
 import Sidebar from '@/components/Sidebar'
 import InfoSection from '@/components/InfoSection'
 import "swiper/swiper.min.css";
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 

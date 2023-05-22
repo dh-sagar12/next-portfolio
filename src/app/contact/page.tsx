@@ -8,7 +8,9 @@ import { TextField, createTheme, ThemeProvider, Button } from "@mui/material";
 import axios from 'axios'
 import { ChangeEvent } from 'react'
 import { FaSpinner } from 'react-icons/fa'
-
+import { toast, ToastContainer } from 'react-toastify'
+import Notify from '@/toastify'
+import FormatAxiosResponse from '@/axiosErrorFormat'
 
 
 // export const metadata = {
@@ -17,13 +19,15 @@ import { FaSpinner } from 'react-icons/fa'
 
 const Contact = () => {
 
-const [Loading, setLoading] = useState<boolean>(false)
+  const [Loading, setLoading] = useState<boolean>(false)
 
   const [ContactInformation, setContactInformation] = useState<ContactMe>({
     email: '',
     full_name: '',
     message: '',
-    subject: ''
+    subject: '', 
+    created_on: new Date().toISOString()
+
   })
 
   const [InputError, setInputError] = useState<InputError>({
@@ -68,18 +72,29 @@ const [Loading, setLoading] = useState<boolean>(false)
       setLoading(true)
       axios.post('/api/contact', ContactInformation).then(res => {
         console.log(res.data);
+        console.log(res.status);
 
-        if (res.status == 201){
-          console.log('SuccesFull');
+        if (res.status == 201) {
+          Notify({ message: res.data.message, type: 'success' })
           setLoading(false)
         }
-        else{
-          alert('Mistakeee')
+        else {
+          // const response  = FormatAxiosResponse(res)
+          console.log(res.data);
+          Notify({ message: 'Something Went Wrong', type: 'error' })
           setLoading(false)
         }
+      }).catch(error => {
+        let response: any = FormatAxiosResponse(error);
+        Notify({ message: response.message.meta.target, type: 'error' })
+        setLoading(false)
+
       })
+
     }
   }
+
+
   const contactInformation: ContacInformation[] = [
     {
       icon: <IoLocationOutline className='mx-auto text-4xl py-5 text-[#05B4E1] ' />,
@@ -191,7 +206,7 @@ const [Loading, setLoading] = useState<boolean>(false)
                       onChange={HandleChangeOnInput}
                       required
                       variant="outlined"
-                      type="text"
+                      type="email"
                       sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                       fullWidth
                       value={ContactInformation.email}
@@ -222,10 +237,10 @@ const [Loading, setLoading] = useState<boolean>(false)
 
                 </div>
               </div>
-
-              <button type="submit" className='px-10 border transition-all duration-500 py-3 rounded-3xl text-lg font-semibold hover:bg-[#05B4E1] border-[#05B4E1] cursor-pointer'  disabled={Loading}>
+              <ToastContainer autoClose={2000} />
+              <button type="submit" className='px-10 border transition-all duration-500 py-3 rounded-3xl text-lg font-semibold hover:bg-[#05B4E1] border-[#05B4E1] cursor-pointer' disabled={Loading}>
                 <span className='flex space-x-2 justify-center align-middle'>
-                  <FaSpinner  className='h-full my-auto animate-spin-fast text-xl ' style={ Loading ? {display: "block" } : {display: "none"}}/>
+                  <FaSpinner className='h-full my-auto animate-spin-fast text-xl ' style={Loading ? { display: "block" } : { display: "none" }} />
                   <span>Message</span>
                 </span>
               </button>
