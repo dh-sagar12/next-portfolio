@@ -1,90 +1,92 @@
-import React from 'react';
+import React, { ChangeEvent, FormEventHandler, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { styled, TextareaAutosize } from '@mui/material';
-import { blue, grey } from '@mui/material/colors';
 
 
-
-const StyledTextarea = styled(TextareaAutosize)(
-  ({ theme }) => `
-  width: 320px;
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 12px;
-  border-radius: 12px 12px 0 12px;
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-
-  &:hover {
-    border-color: ${blue[400]};
-  }
-
-  &:focus {
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
-  }
-
-  // firefox
-  &:focus-visible {
-    outline: 0;
-  }
-`,
-);
 
 interface Prop {
   open: boolean,
-  setOpen: CallableFunction
+  setOpen: CallableFunction,
+  HandleSave: any,
+  dialogueTitle?: string
 }
 
 
 const DialogueBox = (prop: Prop) => {
 
+  interface InputType {
+    title: string,
+    description: string
+  }
+
+  const [InputData, setInputData] = useState<InputType>({
+    title: '',
+    description: ''
+  })
+
   const handleClose = () => {
     prop.setOpen(false);
   };
+
+  const HandleChangeOnInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputData(prev => (
+      {
+        ...prev, [event.target.name]: event.target.value
+      }
+    ))
+  }
+
+  const handleFormSubmit = async (e: any) => {
+    e.preventDefault()
+    await prop.HandleSave(InputData)
+    prop.setOpen(false);
+    setInputData({
+      title: '',
+      description: ''
+    })
+
+  }
 
 
   return (
     <>
       <Dialog open={prop.open} onClose={handleClose} >
-        <DialogTitle className='text-[#D8F4F5] font-semibold '>Add What you Do</DialogTitle>
+        {
+          prop.dialogueTitle ? <DialogTitle className='text-[#D8F4F5] font-semibold '>{prop.dialogueTitle}</DialogTitle> :
+            <DialogTitle className='text-[#D8F4F5] font-semibold '>Add What you Do</DialogTitle>
+        }
+        <form onSubmit={handleFormSubmit} >
+          <DialogContent>
+            <TextField
+              label="Title"
+              name='title'
+              onChange={HandleChangeOnInput}
+              required
+              variant="outlined"
+              type="text"
+              sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
+              fullWidth
+              value={InputData.title}
+            // error={'InputError.fullNameError'}
+            />
+            <textarea name="description" id="description" className='bg-[#444444]  w-full text-[#D8F4F5] outline-none border-[#989998] border rounded-md p-2 focus:border-[#05B4E1] transition-all duration-200 ' required rows={6}
+              placeholder='Description*'
+              value={InputData.description}
+              onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+                setInputData(preval => ({ ...preval, description: event.target.value }))
+              }}
+            ></textarea>
 
-        <DialogContent>
-          <TextField
-            label="Residence"
-            name='residence_country'
-            // onChange={HandleChangeOnInput}
-            required
-            variant="outlined"
-            type="text"
-            sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
-            fullWidth
-          // value={''}
-          // error={'InputError.fullNameError'}
-          />
-          <textarea name="message" id="description" className='bg-[#444444]  w-full text-[#D8F4F5] outline-none border-[#989998] border rounded-md p-2 focus:border-[#05B4E1] transition-all duration-200 ' required rows={6}
-          placeholder='Description*'
-          // value={ContactInformation.message}
-          // onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          //     setContactInformation(preval => ({ ...preval, message: event.target.value }))
-          // }}
-          ></textarea>
-
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type='submit'>Save</Button>
+          </DialogActions>
+        </form>
       </Dialog>
 
     </>

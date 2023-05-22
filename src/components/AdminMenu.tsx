@@ -1,9 +1,44 @@
 import { Button, createTheme, TextField, ThemeProvider } from '@mui/material';
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import DialogueBox from './DialogueBox';
+import { WhatIDo } from '@/types/commontypes';
+import { AiOutlineLaptop } from 'react-icons/ai'
+import { BsDatabase } from 'react-icons/bs'
+import { SiGoogleoptimize } from 'react-icons/si'
+import { IoAnalyticsOutline } from 'react-icons/io5'
+import { MdDeleteOutline } from 'react-icons/md'
+import AddEducatioin from './AddEducation'
+import AddSkills from './AddSkills';
 
 const AdminMenu: React.FC = () => {
     const [open, setOpen] = React.useState(false);
+
+
+    const [WhatIDoData, setWhatIDoData] = useState<WhatIDo[]>([
+
+        {
+            icon: <AiOutlineLaptop className='mb-4' />,
+            title: 'Web Development',
+            description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
+        },
+
+        {
+            icon: <BsDatabase className='mb-4' />,
+            title: 'Database Management',
+            description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
+        },
+        {
+            icon: <SiGoogleoptimize className='mb-4' />,
+            title: 'Search Engine Optimization(SEO)',
+            description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
+        },
+        {
+            icon: <IoAnalyticsOutline className='mb-4' />,
+            title: 'Data Analysis & Machine Learning',
+            description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
+        }
+
+    ])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -82,6 +117,25 @@ const AdminMenu: React.FC = () => {
     });
 
     const HandleChangeOnInput = (event: ChangeEvent<HTMLInputElement>) => {
+
+    }
+
+    const DltWhatDoItem = (ind: number) => {
+        console.log(ind);
+        let filteredData = WhatIDoData.filter((value, index) => {
+            return index !== ind
+        })
+        console.log(filteredData);
+
+        setWhatIDoData(filteredData)
+
+    }
+
+    const SaveWhatIDo = (inputdata: any) => {
+        console.log(inputdata);
+        setWhatIDoData(preval => {
+            return [...preval, inputdata]
+        })
 
     }
 
@@ -183,7 +237,35 @@ const AdminMenu: React.FC = () => {
 
                         <h1 className='font-bold text-[#929090] text-xl  pb-2'>What I Do</h1>
                         <Button variant="outlined" onClick={handleClickOpen}>Add</Button>
-                        <DialogueBox open={open} setOpen={setOpen} />
+                        <DialogueBox open={open} setOpen={setOpen} HandleSave={SaveWhatIDo} />
+
+                        <br />
+                        <div className='grid grid-cols-2 grid-rows-2 justify-stretch space-y-4 mt-8 mb-6'>
+                            {
+                                WhatIDoData.map((elem, index) => {
+                                    return (
+                                        <div className='px-3' key={index + 100}>
+                                            <span className='text-5xl text-red-600 cursor-pointer ' onClick={() => { DltWhatDoItem(index) }} >
+                                                <MdDeleteOutline className='text-end' />
+                                            </span>
+                                            <h3 className='text-xl font-semibold tracking-wide mb-2'>{elem.title}</h3>
+                                            <p className='text-[#8f8d8f] text-lg font-medium'>{elem.description}</p>
+                                        </div>)
+                                })
+
+
+
+                            }
+
+                        </div>
+                        <h1 className='font-bold text-[#929090] text-xl  pb-2'>Educations</h1>
+
+                        <AddEducatioin />
+
+
+                        <h1 className='font-bold text-[#929090] text-xl  pb-2'>Skills</h1>
+
+                        <AddSkills />
 
                     </ThemeProvider>
                 </form>

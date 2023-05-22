@@ -24,7 +24,7 @@ export interface WhatIDo {
 
 
 export interface  Education {
-    year: number, 
+    year: string | number, 
     subject: string, 
     title: string,
     description: string
