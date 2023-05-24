@@ -10,14 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Contact {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  email        String   
-  full_name    String
-  subject      String
-  message      String
-  created_on   DateTime @default(now()) @map("created_on")
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  email      String
+  full_name  String
+  subject    String
+  message    String
+  created_on DateTime @default(now()) @map("created_on")
 }
 
-
+model PersonalInformation {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId  
+  full_name         String
+  email             String
+  phone             String
+  residence_country String
+  address           String
+  age               Int
+  linkedin          String
+  github            String
+  twitter           String
+  about_me          String
+  created_on        DateTime @default(now()) @map("created_on")
+}

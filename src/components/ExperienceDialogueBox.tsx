@@ -1,15 +1,11 @@
-import React, { ChangeEvent, FormEventHandler, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { styled, TextareaAutosize } from '@mui/material';
-import { blue, grey } from '@mui/material/colors';
-import { Education, WhatIDo } from '@/types/commontypes';
-import { SyntheticEvent } from 'react-toastify/dist/utils';
+import {  Experience } from '@/types/commontypes';
 
 
 interface Prop {
@@ -19,11 +15,11 @@ interface Prop {
 }
 
 
-const EducationDialogueBox = (prop: Prop) => {
+const ExperienceDialogueBox = (prop: Prop) => {
 
 
-    const [InputData, setInputData] = useState<Education>({
-        subject: '',
+    const [InputData, setInputData] = useState<Experience>({
+        company: '',
         year: '',
         title: '',
         description: ''
@@ -46,8 +42,8 @@ const EducationDialogueBox = (prop: Prop) => {
         await prop.HandleSave(InputData)
         prop.setOpen(false);
         setInputData({
-            subject: '',
-            year: 0,
+            company: '',
+            year: '',
             title: '',
             description: ''
         })
@@ -58,7 +54,7 @@ const EducationDialogueBox = (prop: Prop) => {
     return (
         <>
             <Dialog open={prop.open} onClose={handleClose} >
-                <DialogTitle className='text-[#D8F4F5] font-semibold '>Add Education Qualification</DialogTitle>
+                <DialogTitle className='text-[#D8F4F5] font-semibold '>Add Experiences</DialogTitle>
                 <form onSubmit={handleFormSubmit} >
                     <DialogContent>
                         <TextField
@@ -67,22 +63,22 @@ const EducationDialogueBox = (prop: Prop) => {
                             onChange={HandleChangeOnInput}
                             required
                             variant="outlined"
-                            type="number"
+                            type="text"
                             sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                             fullWidth
                             value={InputData.year}
                         // error={'InputError.fullNameError'}
                         />
                         <TextField
-                            label="Subject"
-                            name='subject'
+                            label="Company"
+                            name='company'
                             onChange={HandleChangeOnInput}
                             required
                             variant="outlined"
                             type="text"
                             sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                             fullWidth
-                            value={InputData.subject}
+                            value={InputData.company}
                         // error={'InputError.fullNameError'}
                         />
                         <TextField
@@ -117,4 +113,4 @@ const EducationDialogueBox = (prop: Prop) => {
     )
 }
 
-export default EducationDialogueBox  
+export default ExperienceDialogueBox  

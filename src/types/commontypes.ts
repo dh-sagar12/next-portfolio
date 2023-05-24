@@ -7,47 +7,55 @@ export interface navbar {
 }
 
 
-export interface PersonalInfo{
-    Age: number,
-    Residence: string,
-    Address: string,
-    Mail: string,
-    Phone: string
+export interface PersonalInfo {
+    profile_pic?: string,
+    full_name?: string,
+    email?: string,
+    phone?: string,
+    residence_country?: string,
+    address?: string,
+    age?: number 
+    linkedin?: string,
+    github?: string,
+    twitter?: string,
+    about_me?: string,
+    created_on?: string
 }
+
 
 export interface WhatIDo {
     icon?: React.ReactNode,
-    title: string, 
-    description: string
-}
-
-
-
-export interface  Education {
-    year: string | number, 
-    subject: string, 
     title: string,
     description: string
 }
 
 
-export interface  Experience {
+
+export interface Education {
+    year: string | number,
+    subject: string,
+    title: string,
+    description: string
+}
+
+
+export interface Experience {
     year: string,
-    company: string, 
-    title: string, 
+    company: string,
+    title: string,
     description: string
 }
 
 
 export interface CodingSkills {
-    skill: string, 
+    skill: string,
     percentage: number
 }
 
 
 export interface Certification {
     issuerImg: string,
-    title: string, 
+    title: string,
     dateOfComplition: Date,
     certificateId: string
 }
@@ -59,33 +67,33 @@ export interface ProjectCategories {
 
 }
 
-export interface  Project {
-    projectImg : string, 
+export interface Project {
+    projectImg: string,
     ProjectName: string,
     projectUrl: string,
     projectCategory: number
 }
 
 
-export interface  ContacInformation {
+export interface ContacInformation {
     redirect: string,
-    icon : React.ReactNode
-    title : string
+    icon: React.ReactNode
+    title: string
 }
 
 
 export interface ContactMe {
-    full_name : string, 
-    email: string, 
-    subject: string, 
-    message: string, 
-    created_on : string
+    full_name: string,
+    email: string,
+    subject: string,
+    message: string,
+    created_on: string
 }
 
 
-export interface InputError   {
-    emailError :  boolean, 
-    fullNameError: boolean, 
-    messageError : boolean,
+export interface InputError {
+    emailError: boolean,
+    fullNameError: boolean,
+    messageError: boolean,
     subjectError: boolean
-  }
+}

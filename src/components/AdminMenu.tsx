@@ -1,17 +1,39 @@
 import { Button, createTheme, TextField, ThemeProvider } from '@mui/material';
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState, useEffect } from 'react'
 import DialogueBox from './DialogueBox';
-import { WhatIDo } from '@/types/commontypes';
-import { AiOutlineLaptop } from 'react-icons/ai'
+import { PersonalInfo, WhatIDo } from '@/types/commontypes';
+import { AiOutlineLaptop, AiOutlineCamera } from 'react-icons/ai'
 import { BsDatabase } from 'react-icons/bs'
 import { SiGoogleoptimize } from 'react-icons/si'
 import { IoAnalyticsOutline } from 'react-icons/io5'
 import { MdDeleteOutline } from 'react-icons/md'
 import AddEducatioin from './AddEducation'
 import AddSkills from './AddSkills';
+import AddExperience from './AddExperience';
+import Image from 'next/image';
+import { FaSpinner } from 'react-icons/fa';
+import axios from 'axios';
+import Notify from '@/toastify';
+import FormatAxiosResponse from '@/axiosErrorFormat';
+
 
 const AdminMenu: React.FC = () => {
     const [open, setOpen] = React.useState(false);
+
+
+    const [PersonalInformationData, setPersonalInformationData] = useState<PersonalInfo>({
+        full_name: '',
+        email: '',
+        phone: '',
+        residence_country: '',
+        address: '',
+        age: 0,
+        linkedin: '',
+        github: '',
+        twitter: '',
+        about_me: '',
+        created_on:  new Date().toISOString()
+    })
 
 
     const [WhatIDoData, setWhatIDoData] = useState<WhatIDo[]>([
@@ -40,8 +62,38 @@ const AdminMenu: React.FC = () => {
 
     ])
 
+    const [selectedFile, setSelectedFile] = useState<File>()
+    const [preview, setPreview] = useState<any>()
+    const [Loading, setLoading] = useState<boolean>(false)
+
+
+
     const handleClickOpen = () => {
         setOpen(true);
+    };
+
+
+
+    // useEffect(() => {
+    //     const objectUrl = URL.createObjectURL(selectedFile)
+    //     setPreview(objectUrl)
+
+    //     // free memory when ever this component is unmounted
+    //     return () => URL.revokeObjectURL(objectUrl)
+    // }, [selectedFile])
+
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+        console.log(e);
+        if (!e.target.files || e.target.files.length === 0) {
+            return
+        }
+
+
+        setSelectedFile(e.target.files[0])
+        const objectUrl = URL.createObjectURL(e.target.files[0])
+        setPreview(objectUrl)
     };
 
 
@@ -116,9 +168,52 @@ const AdminMenu: React.FC = () => {
         },
     });
 
+
     const HandleChangeOnInput = (event: ChangeEvent<HTMLInputElement>) => {
 
+        setPersonalInformationData(prev => (
+            {
+                ...prev, [event.target.name]: event.target.value
+            }
+        ))
+
     }
+
+
+
+    const handleSubmit = async (event: { preventDefault: () => void }) => {
+        event.preventDefault()
+        console.log(PersonalInformationData);
+
+        setLoading(true)
+        axios.post('/api/profile', PersonalInformationData).then(res => {
+            console.log(res.data);
+            console.log(res.status);
+
+            if (res.status == 201) {
+                Notify({ message: res.data.message, type: 'success' })
+                setLoading(false)
+            }
+            else {
+                // const response  = FormatAxiosResponse(res)
+                console.log(res.data);
+                Notify({ message: 'Something Went Wrong', type: 'error' })
+                setLoading(false)
+            }
+        }).catch(error => {
+            console.log(error);
+            let response: any = FormatAxiosResponse(error);
+            Notify({ message: response?.message?.meta?.target, type: 'error' })
+            setLoading(false)
+
+        })
+
+    }
+
+
+
+
+
 
     const DltWhatDoItem = (ind: number) => {
         console.log(ind);
@@ -142,13 +237,28 @@ const AdminMenu: React.FC = () => {
     return (
         <>
             <section className='py-14 px-12'>
-                <div className='page-title flex justify-between align-middle items-center pb-9'>
+                <div className='page-title flex justify-between align-middle items-center pb-4'>
                     <h2 className='font-bold text-[2.3rem] self-center '>Personal <span className='text-[#05B4E1]'>Information</span></h2>
                     <button>Add New Blog</button>
                 </div>
-                <h1 className='font-bold text-[#929090] text-xl  pb-2'>Basic Information</h1>
-                <form>
+                <input type="file" title='' name="display_picture" onChange={handleFileChange} id="display_picture" accept="image/*" hidden />
 
+                <div className='  mb-5  inline-block' >
+                    <label htmlFor="display_picture" className='cursor-pointer relative' id='display_picture' >
+                        <AiOutlineCamera className='absolute top-1/2 left-[40%] text-5xl opacity-25 text-[#ffff]' />
+                        {
+                            selectedFile ?
+                                <Image src={preview} priority alt='My photo' width={200} height={200} className='rounded-full header-photo ' />
+                                :
+
+                                <Image src={'/main_photo.jpg'} priority alt='My photo' width={200} height={200} className='rounded-full header-photo ' />
+                        }
+                    </label>
+                </div>
+
+                <h1 className='font-bold text-[#929090] text-xl  pb-2'>Basic Information</h1>
+
+                <form onSubmit={handleSubmit}>
                     <ThemeProvider theme={theme}>
                         <div className='grid grid-cols-2 gap-4 pb-7'>
                             <TextField
@@ -160,8 +270,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                            // value={''}
-                            // error={'InputError.fullNameError'}
+                                value={PersonalInformationData.full_name}
                             />
                             <TextField
                                 label="Email"
@@ -172,7 +281,7 @@ const AdminMenu: React.FC = () => {
                                 type="email"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                            // value={''}
+                                value={PersonalInformationData.email}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -184,7 +293,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                            // value={''}
+                                value={PersonalInformationData.phone}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -196,7 +305,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                            // value={''}
+                                value={PersonalInformationData.residence_country}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -209,7 +318,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                            // value={''}
+                                value={PersonalInformationData.address}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -221,16 +330,57 @@ const AdminMenu: React.FC = () => {
                                 type="number"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                            // value={''}
+                                value={PersonalInformationData.age}
                             // error={'InputError.fullNameError'}
                             />
-                            <div className='columns-2'>
-                                <label className='text-[#f5f4f4d3]  text-lg' id='messageLabel'>About Me</label>
-                                <textarea name="message" id="message" className='bg-[#222222]  w-[810px] outline-none border-[#989998] border rounded-md p-2 focus:border-[#05B4E1] transition-all duration-200 ' required rows={6}
-                                // value={ContactInformation.message}
-                                // onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-                                //     setContactInformation(preval => ({ ...preval, message: event.target.value }))
-                                // }}
+                            <div className='col-span-2'>
+                                <h1 className='font-bold text-[#929090] text-xl  pb-2'>Social Links</h1>
+                            </div>
+                            <TextField
+                                label="LinkedIn"
+                                name='linkedin'
+                                onChange={HandleChangeOnInput}
+                                required
+                                variant="outlined"
+                                type="text"
+                                sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
+                                fullWidth
+                                value={PersonalInformationData.linkedin}
+                            // error={'InputError.fullNameError'}
+                            />
+
+                            <TextField
+                                label="Github"
+                                name='github'
+                                onChange={HandleChangeOnInput}
+                                required
+                                variant="outlined"
+                                type="text"
+                                sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
+                                fullWidth
+                                value={PersonalInformationData.github}
+                            // error={'InputError.fullNameError'}
+                            />
+
+                            <TextField
+                                label="Twitter"
+                                name='twitter'
+                                onChange={HandleChangeOnInput}
+                                required
+                                variant="outlined"
+                                type="text"
+                                sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
+                                fullWidth
+                                value={PersonalInformationData.twitter}
+                            // error={'InputError.fullNameError'}
+                            />
+                            <div className='col-span-2'>
+                                <label className='text-[#f5f4f4d3]  text-sm' id='messageLabel'>About Me</label>
+                                <textarea name="about_me" id="about_me" className='bg-[#222222] w-full outline-none border-[#989998] border rounded-md p-2 focus:border-[#05B4E1] transition-all duration-200 ' placeholder='About me' required rows={6}
+                                    value={PersonalInformationData.about_me}
+                                    onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
+                                        setPersonalInformationData(preval => ({ ...preval, about_me: event.target.value }))
+                                    }}
                                 ></textarea>
                             </div>
                         </div>
@@ -267,7 +417,18 @@ const AdminMenu: React.FC = () => {
 
                         <AddSkills />
 
+                        <h1 className='font-bold text-[#929090] text-xl  pb-2'>Experiences</h1>
+
+                        <AddExperience />
+
                     </ThemeProvider>
+
+                    <button type="submit" className='px-10 border transition-all duration-500 py-3 rounded-3xl text-lg font-semibold hover:bg-[#05B4E1] border-[#05B4E1] cursor-pointer' disabled={Loading}>
+                        <span className='flex space-x-2 justify-center align-middle'>
+                            <FaSpinner className='h-full my-auto animate-spin-fast text-xl ' style={Loading ? { display: "block" } : { display: "none" }} />
+                            <span>Save Changes</span>
+                        </span>
+                    </button>
                 </form>
             </section>
         </>

@@ -24,7 +24,7 @@ const Resume = () => {
       title: 'Bachelor Level',
       subject: 'Management',
       year: 2021,
-      description: 'Joined Koteshwor Multiple Campus For Bachelor Degree in Management Faculty, But could not Complete it by the time'
+      description: 'Joined Koteshwor Multiple Campus For Bachelor Degree in Management Faculty.'
     }
   ]
 
