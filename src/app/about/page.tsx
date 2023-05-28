@@ -12,6 +12,7 @@ import { IoIosArrowForward } from 'react-icons/io'
 import { FaQuoteRight } from 'react-icons/fa'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Virtual } from "swiper";
+import SnakeCaseDestructure from '@/caseDestructurer'
 
 
 
@@ -22,11 +23,11 @@ import { Navigation, Virtual } from "swiper";
 const About = () => {
 
   const perosnalInfo: PersonalInfo = {
-    Age: 22,
-    Residence: 'Nepal',
-    Address: 'Kathmandu',
-    Mail: 'dhakalsagar2000@gmail.com',
-    Phone: '+977 9864414883'
+    age: 22,
+    residence_country: 'Nepal',
+    address: 'Kathmandu',
+    email: 'dhakalsagar2000@gmail.com',
+    phone: '+977 9864414883'
 
   }
 
@@ -71,7 +72,7 @@ const About = () => {
                 Object.entries(perosnalInfo).map((elem, index) => {
                   return (
                     <li className='text-lg text-[#8f8d8f]' key={index + 2}>
-                      <span className='text-[#05B4E1] font-semibold pr-4'>{elem[0]}</span>
+                      <span className='text-[#05B4E1] font-semibold pr-4'>{SnakeCaseDestructure(elem[0])}</span>
                       {elem[1]}
                     </li>
                   )

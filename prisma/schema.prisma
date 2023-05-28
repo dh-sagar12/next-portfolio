@@ -20,7 +20,7 @@ model Contact {
 }
 
 model PersonalInformation {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId  
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
   full_name         String
   email             String
   phone             String
@@ -32,4 +32,36 @@ model PersonalInformation {
   twitter           String
   about_me          String
   created_on        DateTime @default(now()) @map("created_on")
+}
+
+model WhatIDo {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  created_on  DateTime @default(now()) @map("created_on")
+}
+
+model Skills {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  skill      String
+  percentage Int
+  created_on DateTime @default(now()) @map("created_on")
+}
+
+model Education {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  year        String
+  subject     String
+  title       String
+  description String
+  created_on  DateTime @default(now()) @map("created_on")
+}
+
+model Experience {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  year        String
+  company     String
+  title       String
+  description String
+  created_on  DateTime @default(now()) @map("created_on")
 }

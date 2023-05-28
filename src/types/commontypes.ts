@@ -14,7 +14,7 @@ export interface PersonalInfo {
     phone?: string,
     residence_country?: string,
     address?: string,
-    age?: number 
+    age?: number ,
     linkedin?: string,
     github?: string,
     twitter?: string,

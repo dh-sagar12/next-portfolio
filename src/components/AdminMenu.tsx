@@ -17,23 +17,29 @@ import Notify from '@/toastify';
 import FormatAxiosResponse from '@/axiosErrorFormat';
 
 
-const AdminMenu: React.FC = () => {
+interface Prop {
+    PersonalInformationData: PersonalInfo,
+    setPersonalInformationData: CallableFunction,
+}
+
+
+const AdminMenu = (props: Prop) => {
     const [open, setOpen] = React.useState(false);
 
 
-    const [PersonalInformationData, setPersonalInformationData] = useState<PersonalInfo>({
-        full_name: '',
-        email: '',
-        phone: '',
-        residence_country: '',
-        address: '',
-        age: 0,
-        linkedin: '',
-        github: '',
-        twitter: '',
-        about_me: '',
-        created_on:  new Date().toISOString()
-    })
+    // const [PersonalInformationData, setPersonalInformationData] = useState<PersonalInfo>({
+    //     full_name: '',
+    //     email: '',
+    //     phone: '',
+    //     residence_country: '',
+    //     address: '',
+    //     age: 0,
+    //     linkedin: '',
+    //     github: '',
+    //     twitter: '',
+    //     about_me: '',
+    //     created_on: new Date().toISOString()
+    // })
 
 
     const [WhatIDoData, setWhatIDoData] = useState<WhatIDo[]>([
@@ -171,11 +177,23 @@ const AdminMenu: React.FC = () => {
 
     const HandleChangeOnInput = (event: ChangeEvent<HTMLInputElement>) => {
 
-        setPersonalInformationData(prev => (
-            {
-                ...prev, [event.target.name]: event.target.value
-            }
-        ))
+        if (event.target.name == 'age') {
+            props.setPersonalInformationData((prev: any) => (
+                {
+                    ...prev, age: parseInt(event.target.value)
+                }
+            ))
+        }
+        else {
+
+            props.setPersonalInformationData((prev: any) => (
+                {
+                    ...prev, [event.target.name]: event.target.value
+                }
+            ))
+        }
+
+
 
     }
 
@@ -183,13 +201,10 @@ const AdminMenu: React.FC = () => {
 
     const handleSubmit = async (event: { preventDefault: () => void }) => {
         event.preventDefault()
-        console.log(PersonalInformationData);
+        console.log(props.PersonalInformationData);
 
         setLoading(true)
-        axios.post('/api/profile', PersonalInformationData).then(res => {
-            console.log(res.data);
-            console.log(res.status);
-
+        axios.post('/api/profile', props.PersonalInformationData).then(res => {
             if (res.status == 201) {
                 Notify({ message: res.data.message, type: 'success' })
                 setLoading(false)
@@ -231,6 +246,21 @@ const AdminMenu: React.FC = () => {
         setWhatIDoData(preval => {
             return [...preval, inputdata]
         })
+        axios.post('/api/whatido', inputdata).then(res => {
+            if (res.status == 201) {
+                Notify({ message: res.data.message, type: 'success' })
+            }
+            else {
+                console.log(res.data);
+                Notify({ message: 'Something Went Wrong', type: 'error' })
+            }
+        }).catch(error => {
+            console.log(error);
+            let response: any = FormatAxiosResponse(error);
+            Notify({ message: response?.message?.meta?.target, type: 'error' })
+            setLoading(false)
+
+        })
 
     }
 
@@ -270,7 +300,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.full_name}
+                                value={props.PersonalInformationData.full_name}
                             />
                             <TextField
                                 label="Email"
@@ -281,7 +311,7 @@ const AdminMenu: React.FC = () => {
                                 type="email"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.email}
+                                value={props.PersonalInformationData.email}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -293,7 +323,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.phone}
+                                value={props.PersonalInformationData.phone}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -305,7 +335,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.residence_country}
+                                value={props.PersonalInformationData.residence_country}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -318,7 +348,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.address}
+                                value={props.PersonalInformationData.address}
                             // error={'InputError.fullNameError'}
                             />
                             <TextField
@@ -330,7 +360,7 @@ const AdminMenu: React.FC = () => {
                                 type="number"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.age}
+                                value={props.PersonalInformationData.age}
                             // error={'InputError.fullNameError'}
                             />
                             <div className='col-span-2'>
@@ -345,7 +375,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.linkedin}
+                                value={props.PersonalInformationData.linkedin}
                             // error={'InputError.fullNameError'}
                             />
 
@@ -358,7 +388,7 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.github}
+                                value={props.PersonalInformationData.github}
                             // error={'InputError.fullNameError'}
                             />
 
@@ -371,15 +401,15 @@ const AdminMenu: React.FC = () => {
                                 type="text"
                                 sx={{ mb: 3, input: { color: '#F5F4F4', padding: '12px', outline: 'F5F4F4' } }}
                                 fullWidth
-                                value={PersonalInformationData.twitter}
+                                value={props.PersonalInformationData.twitter}
                             // error={'InputError.fullNameError'}
                             />
                             <div className='col-span-2'>
                                 <label className='text-[#f5f4f4d3]  text-sm' id='messageLabel'>About Me</label>
                                 <textarea name="about_me" id="about_me" className='bg-[#222222] w-full outline-none border-[#989998] border rounded-md p-2 focus:border-[#05B4E1] transition-all duration-200 ' placeholder='About me' required rows={6}
-                                    value={PersonalInformationData.about_me}
+                                    value={props.PersonalInformationData.about_me}
                                     onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-                                        setPersonalInformationData(preval => ({ ...preval, about_me: event.target.value }))
+                                        props.setPersonalInformationData((preval: any) => ({ ...preval, about_me: event.target.value }))
                                     }}
                                 ></textarea>
                             </div>

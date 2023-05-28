@@ -3,6 +3,8 @@ import EducationDialogueBox from './EducationDialogueBox'
 import { Education } from '@/types/commontypes'
 import { Button } from '@mui/material'
 import { MdDeleteOutline } from 'react-icons/md'
+import axios from 'axios'
+import CreateData from '@/CreateData'
 
 
 const AddEducation = () => {
@@ -29,11 +31,12 @@ const AddEducation = () => {
   };
 
 
-  const SaveEductionData = (inputdata: any) => {
+  const SaveEductionData =  (inputdata: any) => {
     console.log(inputdata);
     setEducationDeta(preval => {
       return [...preval, inputdata]
     })
+    CreateData('/api/education', inputdata)
 
   }
 

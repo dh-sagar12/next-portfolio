@@ -3,6 +3,7 @@ import {  Experience } from '@/types/commontypes'
 import { Button } from '@mui/material'
 import { MdDeleteOutline } from 'react-icons/md'
 import ExperienceDialogueBox from './ExperienceDialogueBox'
+import CreateData from '@/CreateData'
 
 
 const AddExperience = () => {
@@ -33,7 +34,7 @@ const AddExperience = () => {
         setExperienceData(preval => {
             return [...preval, inputdata]
         })
-
+        CreateData('/api/experience', inputdata)
     }
 
     const DltExpData = (ind: number) => {

@@ -6,7 +6,7 @@ import { prisma } from 'db';
 export async function POST(req: Request) {
   try {
 
-    const { full_name, email, phone, residence_country, address, age, linkedin, github, twitter, about_me, created_on } = await req.json();
+    const { full_name, email, phone, residence_country, address, age, linkedin, github, twitter, about_me } = await req.json();
 
     try {
 
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
       if (pInformation.length > 0) {
         console.log('deleting/////');
-        
+
         await prisma.personalInformation.deleteMany()
       }
 
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
         await prisma.personalInformation.create({
           data: {
-            full_name, email, phone, residence_country, address, age, linkedin, github, twitter, about_me, created_on
+            full_name, email, phone, residence_country, address, age, linkedin, github, twitter, about_me
           }
         });
 
@@ -32,13 +32,13 @@ export async function POST(req: Request) {
         }, {
           status: 201
         })
-  
-        
+
+
       } catch (e) {
 
         return NextResponse.json(
           { message: e },
-          { status: 200 }
+          { status: 400 }
         )
 
       }
@@ -59,3 +59,35 @@ export async function POST(req: Request) {
 }
 
 
+
+export async function GET(req: Request) {
+  try {
+    const pInformation = await prisma.personalInformation.findMany()
+    const education =  await prisma.education.findMany()
+    const skill  = await prisma.skills.findMany()
+    const experience = await prisma.experience.findMany()
+    const whatido=  await prisma.whatIDo.findMany()
+
+    const response_data  =  {
+      pInformation: pInformation, 
+      education: education, 
+      skill: skill, 
+      experience: experience, 
+      whatido: whatido
+    }
+
+    return NextResponse.json({
+      data: response_data, 
+      data_count: pInformation.length
+    }, {
+      status: 200
+    })
+
+  } catch (error) {
+    return NextResponse.json(
+      { message: error },
+      { status: 500 }
+    )
+  }
+
+}

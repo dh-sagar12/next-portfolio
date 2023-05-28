@@ -3,6 +3,7 @@ import DialogueBox from './DialogueBox'
 import { CodingSkills } from '@/types/commontypes'
 import { Button, LinearProgress } from '@mui/material'
 import { MdDeleteOutline } from 'react-icons/md'
+import CreateData from '@/CreateData'
 
 
 const AddEducation = () => {
@@ -47,6 +48,7 @@ const AddEducation = () => {
         setSkillData(preval => {
             return [...preval, { skill: inputdata.title, percentage: inputdata.description }]
         })
+        CreateData('/api/skill', { skill: inputdata.title, percentage: parseInt(inputdata.description) })
 
     }
 

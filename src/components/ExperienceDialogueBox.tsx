@@ -55,7 +55,7 @@ const ExperienceDialogueBox = (prop: Prop) => {
         <>
             <Dialog open={prop.open} onClose={handleClose} >
                 <DialogTitle className='text-[#D8F4F5] font-semibold '>Add Experiences</DialogTitle>
-                <form onSubmit={handleFormSubmit} >
+                <form  >
                     <DialogContent>
                         <TextField
                             label="Year"
@@ -104,7 +104,7 @@ const ExperienceDialogueBox = (prop: Prop) => {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button type='submit'>Save</Button>
+                        <Button type='submit' onClick={handleFormSubmit} >Save</Button>
                     </DialogActions>
                 </form>
             </Dialog>
