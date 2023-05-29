@@ -2,7 +2,7 @@
 
 import Head from 'next/head'
 import React from 'react'
-import {PersonalInfo, WhatIDo} from  '../../types/commontypes'
+import { PersonalInfo, WhatIDo } from '../../types/commontypes'
 import { AiOutlineLaptop } from 'react-icons/ai'
 import { BsDatabase } from 'react-icons/bs'
 import { SiGoogleoptimize } from 'react-icons/si'
@@ -10,9 +10,13 @@ import { IoAnalyticsOutline } from 'react-icons/io5'
 import { IoIosArrowBack } from 'react-icons/io'
 import { IoIosArrowForward } from 'react-icons/io'
 import { FaQuoteRight } from 'react-icons/fa'
+import { FiLoader } from 'react-icons/fi'
+import { TbLoader3 } from 'react-icons/tb'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Virtual } from "swiper";
 import SnakeCaseDestructure from '@/caseDestructurer'
+import useProfile from '@/useProfile'
+
 
 
 
@@ -21,50 +25,39 @@ import SnakeCaseDestructure from '@/caseDestructurer'
 // }
 
 const About = () => {
+  const { profile, isLoading } = useProfile()
 
   const perosnalInfo: PersonalInfo = {
-    age: 22,
-    residence_country: 'Nepal',
-    address: 'Kathmandu',
-    email: 'dhakalsagar2000@gmail.com',
-    phone: '+977 9864414883'
+    age: profile?.data?.pInformation[0].age,
+    residence_country: profile?.data?.pInformation[0].residence_country,
+    address: profile?.data?.pInformation[0].address,
+    email: profile?.data?.pInformation[0].email,
+    phone: profile?.data?.pInformation[0].phone
 
   }
 
-  const whatIDo: WhatIDo[] = [
-    {
-      icon: <AiOutlineLaptop className='mb-4' />,
-      title: 'Web Development',
-      description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
-    },
 
-    {
-      icon: <BsDatabase className='mb-4' />,
-      title: 'Database Management',
-      description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
-    },
-    {
-      icon: <SiGoogleoptimize className='mb-4' />,
-      title: 'Search Engine Optimization(SEO)',
-      description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
-    },
-    {
-      icon: <IoAnalyticsOutline className='mb-4' />,
-      title: 'Data Analysis & Machine Learning',
-      description: 'Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales.'
-    }
+  const whatIDoIcon: Array<React.ReactNode> = [<AiOutlineLaptop className='mb-4' />, <BsDatabase className='mb-4' />, <SiGoogleoptimize className='mb-4' />, <IoAnalyticsOutline className='mb-4' /> ]
 
-  ]
+  const whatIDo: WhatIDo[] = profile?.data?.whatido
+
+
+  if (isLoading) return <div className='py-20 px-12'>
+    <div className='text-center '>
+      <TbLoader3 className='animate-spin-mid text-[#05B4E1] text-5xl mx-auto' />
+    </div>
+  </div>
 
   return (
     <>
       <section className='py-20 px-12'>
+
         <div className='page-title mb-11'>
           <h2 className='font-bold text-[2.5rem] leading-4  pb-10'>About <span className='text-[#05B4E1]'>Me</span></h2>
         </div>
         <div className='grid grid-cols-5  '>
           <div className='col-span-3 justify-self-start'>
-            <p className='text-xl leading-relaxed text-[#8f8d8f] ' >As a skilled Database Administrator and Web Developer and Machine Learning enthusiast, I am passionate about efficient data management and creating engaging web applications that enhance user experience. With extensive experience in SQL, database design, ReactJS, NodeJS, Python and NextJS, I am committed to staying up-to-date with the latest trends.</p>
+            <p className='text-xl leading-relaxed text-[#8f8d8f] ' >{profile?.data?.pInformation[0].about_me}</p>
           </div>
           <div className='justify-self-end col-span-2'>
             <ul className='space-y-3'>
@@ -93,7 +86,7 @@ const About = () => {
               return (
                 <div className='px-3' key={index + 100}>
                   <span className='text-5xl text-[#05B4E1]'>
-                    {elem.icon}
+                    {whatIDoIcon[index]}
                   </span>
                   <h3 className='text-xl font-semibold tracking-wide mb-2'>{elem.title}</h3>
                   <p className='text-[#8f8d8f] text-lg font-medium'>{elem.description}</p>
@@ -142,6 +135,7 @@ const About = () => {
           </Swiper>
 
         </div>
+
       </section>
     </>
   )

@@ -5,6 +5,8 @@ import Head from 'next/head'
 import LinearProgress from '@mui/material/LinearProgress';
 
 import { Certification, CodingSkills, Education, Experience } from '@/types/commontypes';
+import useProfile from '@/useProfile';
+import { TbLoader3 } from 'react-icons/tb';
 
 
 // export const metadata = {
@@ -13,64 +15,43 @@ import { Certification, CodingSkills, Education, Experience } from '@/types/comm
 
 const Resume = () => {
 
-  const education: Education[] = [
-    {
-      title: 'Intermediate Level',
-      year: 2019,
-      subject: 'Applied Science',
-      description: 'Completed My interemediate level schooling from Kalika Manavgyan Seconday School Butwal in Science Faculty with good academic Result.'
-    },
-    {
-      title: 'Bachelor Level',
-      subject: 'Management',
-      year: 2021,
-      description: 'Joined Koteshwor Multiple Campus For Bachelor Degree in Management Faculty.'
-    }
-  ]
+  const { profile, isLoading } = useProfile()
 
 
-  const experience: Experience[] = [
-    {
-      company: 'Premium Technologies Pvt. Ltd.',
-      title: 'DBA & System Analyst',
-      year: 'Jan. 2022 - Present',
-      description: 'Skills: Microsoft SQL Server · .NET Framework · Database Administration · Internet Information Services (IIS) · PostgreSQL'
-    },
-    {
-      company: 'Premium Technologies Pvt. Ltd.',
-      title: 'Technical Support Specialist',
-      year: 'Sept. 2021 - Dec 2021',
-      description: 'Skills: Customer Communication · Database Administration · Internet Information Services (IIS) · Technical Support · Communication · SQL · PostgreSQL'
-    }
-  ]
+const education : Education[] =  profile?.data?.education
 
 
-  const codingSkills: CodingSkills[] = [
-    {
-      skill: 'HTML',
-      percentage: 80
-    },
-    {
-      skill: 'CSS',
-      percentage: 75
-    },
-    {
-      skill: 'Python',
-      percentage: 70
-    },
-    {
-      skill: 'JavaScript',
-      percentage: 60
-    },
-    {
-      skill: 'SQL',
-      percentage: 80
-    },
-    {
-      skill: 'C#',
-      percentage: 30
-    }
-  ]
+const experience: Experience[] = profile?.data?.experience
+
+
+  // const codingSkills: CodingSkills[] = [
+  //   {
+  //     skill: 'HTML',
+  //     percentage: 80
+  //   },
+  //   {
+  //     skill: 'CSS',
+  //     percentage: 75
+  //   },
+  //   {
+  //     skill: 'Python',
+  //     percentage: 70
+  //   },
+  //   {
+  //     skill: 'JavaScript',
+  //     percentage: 60
+  //   },
+  //   {
+  //     skill: 'SQL',
+  //     percentage: 80
+  //   },
+  //   {
+  //     skill: 'C#',
+  //     percentage: 30
+  //   }
+  // ]
+
+const codingSkills: CodingSkills[] = profile?.data?.skill
 
 
   const certificate: Certification[] = [
@@ -93,7 +74,15 @@ const Resume = () => {
       dateOfComplition: new Date('2020-06-17')
     }
   ]
-  
+
+
+
+  if (isLoading) return <div className='py-20 px-12'>
+    <div className='text-center '>
+      <TbLoader3 className='animate-spin-mid text-[#05B4E1] text-5xl mx-auto' />
+    </div>
+  </div>
+
   return (
     <>
 
@@ -204,7 +193,7 @@ const Resume = () => {
           {
             certificate.map((elem, index) => {
               return (
-                <div className='rounded-md border border-[#686868] flex bg-[#454544]' key={index+8787}>
+                <div className='rounded-md border border-[#686868] flex bg-[#454544]' key={index + 8787}>
                   <div className='self-center px-5 text-xs text-[#9c9c9c]'>
                     <img src={elem.issuerImg} alt="logo" width={100} />
                   </div>

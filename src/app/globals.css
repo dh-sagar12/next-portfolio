@@ -111,6 +111,9 @@ img {
   animation: spin 0.5s linear infinite;
 }
 
+.animate-spin-mid {
+  animation: spin 1s linear infinite;
+}
 /* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
