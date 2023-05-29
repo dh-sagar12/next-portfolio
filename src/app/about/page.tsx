@@ -37,7 +37,7 @@ const About = () => {
   }
 
 
-  const whatIDoIcon: Array<React.ReactNode> = [<AiOutlineLaptop className='mb-4' />, <BsDatabase className='mb-4' />, <SiGoogleoptimize className='mb-4' />, <IoAnalyticsOutline className='mb-4' /> ]
+  const whatIDoIcon: React.ReactNode[] = [<AiOutlineLaptop className='mb-4' />, <BsDatabase className='mb-4' />, <SiGoogleoptimize className='mb-4' />, <IoAnalyticsOutline className='mb-4' /> ]
 
   const whatIDo: WhatIDo[] = profile?.data?.whatido
 
