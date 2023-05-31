@@ -10,7 +10,6 @@ import { IoAnalyticsOutline } from 'react-icons/io5'
 import { IoIosArrowBack } from 'react-icons/io'
 import { IoIosArrowForward } from 'react-icons/io'
 import { FaQuoteRight } from 'react-icons/fa'
-import { FiLoader } from 'react-icons/fi'
 import { TbLoader3 } from 'react-icons/tb'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Virtual } from "swiper";
@@ -37,7 +36,7 @@ const About = () => {
   }
 
 
-  const whatIDoIcon: React.ReactNode[] = [<AiOutlineLaptop className='mb-4' />, <BsDatabase className='mb-4' />, <SiGoogleoptimize className='mb-4' />, <IoAnalyticsOutline className='mb-4' /> ]
+  const whatIDoIcon  = [<AiOutlineLaptop className='mb-4' key={'AiOutlineLaptop'} />, <BsDatabase className='mb-4'  key={'BsDatabase'}/>, <SiGoogleoptimize className='mb-4' key={'SiGoogleoptimize'} />, <IoAnalyticsOutline className='mb-4' key={'IoAnalyticsOutline'}/> ]
 
   const whatIDo: WhatIDo[] = profile?.data?.whatido
 
