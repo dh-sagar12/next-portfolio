@@ -65,3 +65,14 @@ model Experience {
   description String
   created_on  DateTime @default(now()) @map("created_on")
 }
+
+
+
+model User{
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  full_name   String 
+  email       String    @unique
+  password    String  
+  created_on  DateTime @default(now()) @map("created_on")
+  
+}

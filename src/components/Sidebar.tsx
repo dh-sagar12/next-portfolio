@@ -9,9 +9,16 @@ import { BiBook } from 'react-icons/bi'
 import { BsEnvelope } from 'react-icons/bs'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { CiLogin } from 'react-icons/ci';
+import { signIn, signOut, useSession } from "next-auth/react";
+
 
 
 const Sidebar: React.FC = () => {
+
+    const { data: session } = useSession();
+    console.log(session?.user);
+
    
 
     const pathname    =  usePathname()
@@ -74,8 +81,19 @@ const Sidebar: React.FC = () => {
                         )
                     })
                 }
-
-            </nav>
+                
+                { session && session.user ? 
+                     <div className='border-b-[0.1px] border-[#565757] m-1 cursor-pointer mt-1 mb-2 pb-3'>
+                        <Link href='/login'>
+                            <span className= {'text-4xl hover:text-[#0B98BD] list-none'} onClick={()=> {signOut()}}>
+                                <CiLogin className='mx-auto hover:text-[#0B98BD]'/>
+                            </span>
+                            <p className='text-[#d6d6d6] text-[12px] hover:text-[#0B98BD]  font-semibold py-1 text-center'>Logout</p>
+                        </Link>
+                     </div>
+                     : <></>
+                }
+            </nav>  
         </>
     )
 }

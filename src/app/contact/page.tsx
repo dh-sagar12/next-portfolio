@@ -4,11 +4,11 @@ import { ContacInformation, ContactMe, InputError } from '@/types/commontypes'
 import React, { useState } from 'react'
 import { BsTelephone, BsEnvelopeAt, BsCheck2Circle } from 'react-icons/bs'
 import { IoLocationOutline } from 'react-icons/io5'
-import { TextField, createTheme, ThemeProvider, Button } from "@mui/material";
+import { TextField, createTheme, ThemeProvider } from "@mui/material";
 import axios from 'axios'
 import { ChangeEvent } from 'react'
 import { FaSpinner } from 'react-icons/fa'
-import { toast, ToastContainer } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import Notify from '@/toastify'
 import FormatAxiosResponse from '@/axiosErrorFormat'
 
@@ -58,13 +58,13 @@ const Contact = () => {
     }
     if (ContactInformation.full_name == '') {
       setInputError((prev) => (
-        { ...prev, full_name: true }
+        { ...prev, fullNameError: true }
       ))
     }
 
     if (ContactInformation.subject == '') {
       setInputError((prev) => (
-        { ...prev, subject: true }
+        { ...prev, subjectError: true }
       ))
     }
 

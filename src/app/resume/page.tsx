@@ -24,33 +24,6 @@ const education : Education[] =  profile?.data?.education
 const experience: Experience[] = profile?.data?.experience
 
 
-  // const codingSkills: CodingSkills[] = [
-  //   {
-  //     skill: 'HTML',
-  //     percentage: 80
-  //   },
-  //   {
-  //     skill: 'CSS',
-  //     percentage: 75
-  //   },
-  //   {
-  //     skill: 'Python',
-  //     percentage: 70
-  //   },
-  //   {
-  //     skill: 'JavaScript',
-  //     percentage: 60
-  //   },
-  //   {
-  //     skill: 'SQL',
-  //     percentage: 80
-  //   },
-  //   {
-  //     skill: 'C#',
-  //     percentage: 30
-  //   }
-  // ]
-
 const codingSkills: CodingSkills[] = profile?.data?.skill
 
 

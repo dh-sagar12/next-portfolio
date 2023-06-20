@@ -93,8 +93,23 @@ export interface ContactMe {
 
 
 export interface InputError {
-    emailError: boolean,
-    fullNameError: boolean,
-    messageError: boolean,
-    subjectError: boolean
+    emailError?: boolean,
+    fullNameError?: boolean,
+    messageError?: boolean,
+    subjectError?: boolean, 
+    passwordError?: boolean
+}
+
+
+export interface SignUpForm {
+    full_name: string, 
+    email: string, 
+    password: string, 
+    confirm_password: string
+}
+
+
+export interface LoginForm{
+    email: string, 
+    password: string
 }
