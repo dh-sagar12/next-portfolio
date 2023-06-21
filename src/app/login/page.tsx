@@ -92,6 +92,7 @@ const Login = () => {
             const res  =  await signIn('credentials', {
                 email: LoginFormData.email,
                 password: LoginFormData.password, 
+                url: window.location.origin, 
                 redirect: false
             })
             setLoading(false)

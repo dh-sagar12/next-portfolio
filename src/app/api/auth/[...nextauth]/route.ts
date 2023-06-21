@@ -2,6 +2,12 @@ import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextResponse } from "next/server";
+
+// let baseURL;
+// if (process.env.NODE_ENV =='development') {
+//     baseURL = 'http://localhost:3000'
+// }
+
 const handler = NextAuth({
   session: {
     strategy: "jwt",
@@ -12,21 +18,27 @@ const handler = NextAuth({
       credentials: {
         email: { label: "email", type: "email", placeholder: "email@email.com" },
         password: { label: "Password", type: "password" },
+        url: {label:'url', type: 'text'}
       }, 
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const res = await fetch("http://localhost:3000/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-        });
+        // const res = await fetch("http://localhost:3000/api/login", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({
+        //     email: credentials?.email,
+        //     password: credentials?.password,
+        //   }),
+        // });
 
-        const user = await res.json();
+        const res  =  await axios.post(`${credentials?.url}/api/login`, {
+          email: credentials?.email, 
+          password: credentials?.password
+        })
+
+        const user = res.data;
         console.log('user is ', user);
         
         if (user?.data) {
