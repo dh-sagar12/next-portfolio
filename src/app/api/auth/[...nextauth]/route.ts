@@ -1,12 +1,6 @@
 import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextResponse } from "next/server";
-
-// let baseURL;
-// if (process.env.NODE_ENV =='development') {
-//     baseURL = 'http://localhost:3000'
-// }
 
 const handler = NextAuth({
   session: {
@@ -53,6 +47,7 @@ const handler = NextAuth({
   pages: {
     signIn: '/login', 
   }, 
+  secret: process.env.NEXTAUTH_SECRET, 
   callbacks: {
     async jwt({ token, user }) {
       return { ...token, ...user };
