@@ -14,7 +14,7 @@ const Blog = () => {
   return (
     <>
 
-      <div className='  p-60 text-center'>
+      <div className='  sm:p-60 p-10 py-40  text-center'>
         <div className="pt-10 pb-3">
           <p className=' text-6xl  font-bold leading-relaxed '>Blog(ब्लग)</p>
         </div>

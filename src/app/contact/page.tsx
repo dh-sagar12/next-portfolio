@@ -155,21 +155,21 @@ const Contact = () => {
 
   return (
     <>
-      <section className='py-20 px-12'>
+      <section className='sm:py-20 sm:px-12  py-14 px-5'>
         <div className='page-title '>
           <h2 className='font-bold text-[2.3rem] leading-4  pb-10'>Con<span className='text-[#05B4E1]'>tact</span></h2>
         </div>
 
-        <div className='grid grid-cols-5  '>
+        <div className='sm:grid sm:grid-cols-5 flex flex-col-reverse  '>
 
-          <div className='col-span-2  mx-5 '>
+          <div className='sm:col-span-2  sm:mx-5 mx-2 '>
             {
               contactInformation.map((elem, index) => {
                 return (
-                  <div className='flex flex-col space-x-7 my-4 bg-[#333232]' key={index}>
+                  <div className='flex flex-col space-x-7 my-4 bg-[#333232] sm:px-0 px-3' key={index}>
                     <div className=' text-center py-5  '>
                       {elem.icon}
-                      <h4 className='text-xl font-bold hover:text-[#05B4E1]'>
+                      <h4 className='sm:text-xl sm:font-bold text-lg font-semibold hover:text-[#05B4E1]'>
                         <a href={elem.redirect}>{elem.title}</a>
                       </h4>
                     </div>
@@ -184,7 +184,7 @@ const Contact = () => {
 
 
             <form autoComplete="off" onSubmit={handleSubmit}>
-              <div className='grid grid-cols-2 gap-4'>
+              <div className='grid sm:grid-cols-2 grid-cols-1 gap-4'>
                 <div>
                   <ThemeProvider theme={theme}>
 
@@ -238,7 +238,7 @@ const Contact = () => {
                 </div>
               </div>
               <ToastContainer autoClose={2000} />
-              <button type="submit" className='px-10 border transition-all duration-500 py-3 rounded-3xl text-lg font-semibold hover:bg-[#05B4E1] border-[#05B4E1] cursor-pointer' disabled={Loading}>
+              <button type="submit" className='px-10  border transition-all duration-500 py-3 my-5 sm:my-0  rounded-3xl text-lg font-semibold hover:bg-[#05B4E1] border-[#05B4E1] cursor-pointer' disabled={Loading}>
                 <span className='flex space-x-2 justify-center align-middle'>
                   <FaSpinner className='h-full my-auto animate-spin-fast text-xl ' style={Loading ? { display: "block" } : { display: "none" }} />
                   <span>Message</span>

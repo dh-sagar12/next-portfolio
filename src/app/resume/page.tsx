@@ -50,7 +50,7 @@ const codingSkills: CodingSkills[] = profile?.data?.skill
 
 
 
-  if (isLoading) return <div className='py-20 px-12'>
+  if (isLoading) return <div className='sm:py-20 sm:px-12 py-14 px-5'>
     <div className='text-center '>
       <TbLoader3 className='animate-spin-mid text-[#05B4E1] text-5xl mx-auto' />
     </div>
@@ -60,19 +60,19 @@ const codingSkills: CodingSkills[] = profile?.data?.skill
     <>
 
       {/* Experience ,  skill  & Education section */}
-      <section className='py-20 px-12'>
+      <section className='sm:py-20 sm:px-12 py-14 px-5'>
         <div className='page-title '>
           <h2 className='font-bold text-[2.3rem] leading-4  pb-10'>Res<span className='text-[#05B4E1]'>ume</span></h2>
         </div>
 
-        <div className='grid grid-cols-2  gap-9 '>
+        <div className='sm:grid sm:grid-cols-2  sm:gap-9 flex flex-col '>
           <div className='justify-self-start'>
 
             {/* Education Section start from here  */}
 
             <h3 className='text-2xl font-extrabold py-5' >Education</h3>
 
-            <div className='grid grid-cols-2 '>
+            <div className='grid grid-cols-2 gap-x-5 sm:gap-0'>
 
               {
                 education.map((elem, index) => {
@@ -85,8 +85,8 @@ const codingSkills: CodingSkills[] = profile?.data?.skill
                       <p className='text-[#909191e0] '>{elem.title}</p>
                     </div>
                       <div>
-                        <h5 className='font-semibold text-xl pb-2 pt-9'>{elem.subject}</h5>
-                        <p className='text-[#909191e0] '>{elem.description}</p>
+                        <h5 className='font-semibold sm:text-xl text-lg  pb-2 pt-9'>{elem.subject}</h5>
+                        <p className='text-[#909191e0] text-sm sm:text-base'>{elem.description}</p>
                       </div></React.Fragment>
                   )
                 })
@@ -113,12 +113,12 @@ const codingSkills: CodingSkills[] = profile?.data?.skill
                         <div className='absolute text-2xl  rounded-full bg-[#05b5e177] -left-[7.5px] mt-2'>
                           <div className='p-[0.2rem] m-1 bg-[#292929e1] rounded-full'></div>
                         </div>
-                        <h5 className='text-lg font-bold text-[#9fa0a0e0]'>{elem.year}</h5>
-                        <p className='text-[#909191e0] w-2/3'>{elem.company}</p>
+                        <h5 className='sm:text-lg text-sm  font-bold text-[#9fa0a0e0]'>{elem.year}</h5>
+                        <p className='text-[#909191e0] w-2/3 sm:text-base text-xs'>{elem.company}</p>
                       </div>
                       <div>
-                        <h5 className='font-semibold text-xl pb-2 pt-9'>{elem.title}</h5>
-                        <p className='text-[#909191e0] '>{elem.description}</p>
+                        <h5 className='font-semibold sm:text-xl text-sm pb-2 pt-9'>{elem.title}</h5>
+                        <p className='text-[#909191e0] text-xs sm:text-base'>{elem.description}</p>
                       </div>
                     </React.Fragment>
                   )
@@ -155,23 +155,23 @@ const codingSkills: CodingSkills[] = profile?.data?.skill
 
 
       {/* certificate section  */}
-      <section className=' px-12 pb-20'>
+      <section className=' sm:px-12 sm:pb-20 py-14 px-5 '>
         <div className='page-title mb-10 flex flex-row justify-between'>
           <h2 className='font-bold text-3xl leading-4   '>Certi
             <span className='text-[#05B4E1]'>ficates</span>
           </h2>
         </div>
-        <div className='grid grid-cols-2 gap-5'>
+        <div className='sm:grid sm:grid-cols-2 sm:gap-5 flex flex-col space-y-5 sm:space-y-0'>
 
           {
             certificate.map((elem, index) => {
               return (
-                <div className='rounded-md border border-[#686868] flex bg-[#454544]' key={index + 8787}>
+                <div className='rounded-md border border-[#686868] flex bg-[#454544] ' key={index + 8787}>
                   <div className='self-center px-5 text-xs text-[#9c9c9c]'>
                     <img src={elem.issuerImg} alt="logo" width={100} />
                   </div>
-                  <div className='pt-5 px-7 pb-9 bg-[#232322] w-full'>
-                    <h4 className='font-semibold text-xl py-3'>{elem.title}</h4>
+                  <div className='sm:pt-5 sm:px-7 sm:pb-9 px-3 py-2 bg-[#232322] w-full'>
+                    <h4 className='font-semibold sm:text-xl py-3 text-sm'>{elem.title}</h4>
                     <p className='text-sm text-[#838383]'>Certification ID: {elem.certificateId}</p>
                     <p className='text-sm text-[#838383]'>{elem.dateOfComplition.toLocaleDateString('hi-IN')}</p>
                   </div>

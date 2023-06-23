@@ -1,7 +1,7 @@
 "use client"
 
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PersonalInfo, WhatIDo } from '../../types/commontypes'
 import { AiOutlineLaptop } from 'react-icons/ai'
 import { BsDatabase } from 'react-icons/bs'
@@ -35,6 +35,16 @@ const About = () => {
 
   }
 
+  const [SliderCount, setSliderCount] = useState(1)
+
+
+  useEffect(() => {
+    if (window.screen.width > 500) {
+      setSliderCount(2)
+    }
+  }, [])
+  
+
 
   const whatIDoIcon  = [<AiOutlineLaptop className='mb-4' key={'AiOutlineLaptop'} />, <BsDatabase className='mb-4'  key={'BsDatabase'}/>, <SiGoogleoptimize className='mb-4' key={'SiGoogleoptimize'} />, <IoAnalyticsOutline className='mb-4' key={'IoAnalyticsOutline'}/> ]
 
@@ -49,16 +59,16 @@ const About = () => {
 
   return (
     <>
-      <section className='py-20 px-12'>
+      <section className='sm:py-20 sm:px-12  py-14 px-5'>
 
         <div className='page-title mb-11'>
           <h2 className='font-bold text-[2.5rem] leading-4  pb-10'>About <span className='text-[#05B4E1]'>Me</span></h2>
         </div>
-        <div className='grid grid-cols-5  '>
-          <div className='col-span-3 justify-self-start'>
+        <div className='sm:grid sm:grid-cols-5 flex flex-col-reverse '>
+          <div className='sm:col-span-3 justify-self-start py-8'>
             <p className='text-xl leading-relaxed text-[#8f8d8f] ' >{profile?.data?.pInformation[0].about_me}</p>
           </div>
-          <div className='justify-self-end col-span-2'>
+          <div className='sm:justify-self-end sm:col-span-2 col-span-1'>
             <ul className='space-y-3'>
               {
                 Object.entries(perosnalInfo).map((elem, index) => {
@@ -75,11 +85,11 @@ const About = () => {
         </div>
       </section>
 
-      <section className='px-20 pt-3 pb-20'>
+      <section className='sm:px-20 sm:pt-3 sm:pb-20  py-14 px-5'>
         <div className='page-title mb-6'>
           <h2 className='font-bold text-2xl leading-4  pb-8'>What<span className='text-[#05B4E1]'> I Do</span></h2>
         </div>
-        <div className='grid grid-cols-2 grid-rows-2 justify-stretch space-y-4'>
+        <div className=' flex flex-col sm:grid sm:grid-cols-2 sm:grid-rows-2 sm:justify-stretch space-y-4'>
           {
             whatIDo.map((elem, index) => {
               return (
@@ -96,19 +106,19 @@ const About = () => {
         </div>
       </section>
 
-      <section className='px-20 pt-3 mb-10'>
+      <section className='sm:px-20 pt-3 mb-10 px-5'>
         <div className='page-title mb-10 flex flex-row justify-between'>
           <h2 className='font-bold text-2xl leading-4  '>My
             <span className='text-[#05B4E1]'> References</span>
           </h2>
-          <div className='flex space-x-2'>
+          <div className='sm:flex space-x-2  hidden'>
             <button className='p-2 bg-[#454445] text-lg rounded-md hover:bg-[#05B4E1]'><IoIosArrowBack /></button>
             <button className='p-2 bg-[#454445] text-lg rounded-md hover:bg-[#05B4E1]'><IoIosArrowForward /> </button>
           </div>
 
         </div>
-        <div className=''>
-          <Swiper modules={[Virtual]} spaceBetween={25} slidesPerView={2} virtual  >
+        <div className='block '>
+          <Swiper modules={[Virtual]} spaceBetween={25} slidesPerView={SliderCount} virtual  >
             {
               whatIDo.map((elem, index) => {
                 return (

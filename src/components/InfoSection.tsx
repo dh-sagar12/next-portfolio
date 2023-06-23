@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { CiFacebook } from 'react-icons/ci'
 import { FaLinkedinIn } from 'react-icons/fa'
 import { BsTwitter } from 'react-icons/bs'
 import { ImGithub } from 'react-icons/im'
@@ -15,14 +14,14 @@ const InfoSection = () => {
 
 
 
-  if (isLoading) return <div className='py-20 px-12'>
+  if (isLoading) return <div className='py-20 px-12 '>
     <div className='text-center '>
       <TbLoader3 className='animate-spin-mid text-[#05B4E1] text-5xl mx-auto' />
     </div>
   </div>
   return (
     <>
-      <div className='w-fit mx-auto pt-16' >
+      <div className='sm:w-fit sm:mx-auto sm:pt-16' >
         <header className='flex flex-col justify-between'>
           <div className='rounded-full ' >
             <Image src={'/main_photo.jpg'} priority alt='My photo' width={200} height={200} className='rounded-full header-photo' />
