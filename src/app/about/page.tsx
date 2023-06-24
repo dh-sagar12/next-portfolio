@@ -2,7 +2,7 @@
 
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
-import { PersonalInfo, WhatIDo } from '../../types/commontypes'
+import { PersonalInfo, References, WhatIDo } from '../../types/commontypes'
 import { AiOutlineLaptop } from 'react-icons/ai'
 import { BsDatabase } from 'react-icons/bs'
 import { SiGoogleoptimize } from 'react-icons/si'
@@ -50,6 +50,24 @@ const About = () => {
 
   const whatIDo: WhatIDo[] = profile?.data?.whatido
 
+  const References: References[] =  [
+    {
+      name: "Pratik Sharma", 
+      postion: "Cheif Business Officer", 
+      description: 'Sagar is a skilled IT professional with expertise in software development and database administration'
+    }, 
+    {
+      name: "Sujan Pradhan", 
+      postion: "Software Engineer", 
+      description: 'With proficiency in both software development and database administration, Sagar is a capable IT professional.'
+    }, 
+    {
+      name: "Subin Shakya", 
+      postion: "Business Professional", 
+      description: 'Sagar excels in software development and database administration, delivering reliable and efficient systems.'
+    }
+
+  ]
 
   if (isLoading) return <div className='py-20 px-12'>
     <div className='text-center '>
@@ -120,19 +138,19 @@ const About = () => {
         <div className='block '>
           <Swiper modules={[Virtual]} spaceBetween={25} slidesPerView={SliderCount} virtual  >
             {
-              whatIDo.map((elem, index) => {
+              References.map((elem, index) => {
                 return (
                   <SwiperSlide virtualIndex={index + 101} key={index} className=''>
                     <div className='px-10 py-3 border-[#515353ce] rounded-lg border '>
                       <span className='text-[#05B4E1] '>
-                        <img height={100} width={100} src="https://lmpixels.com/demo/breezycv/darkfw/1/img/testimonials/testimonial-1.jpg" className='rounded-full mx-auto ' alt="text" />
+                        <img height={100} width={100} src="https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg" className='rounded-full mx-auto ' alt="text" />
                       </span>
                       <p className='text-[#8f8d8f] text-lg  mt-8 pb-5'>{elem.description}</p>
 
                       <div className='flex justify-between space-x-2 mb-2 '>
                         <div>
-                          <h3 className='text-lg  tracking-wide font-semibold '>Pratik Sharma</h3>
-                          <p className='text-[#8f8d8f] text-lg '>General Manager</p>
+                          <h3 className='text-lg  tracking-wide font-semibold '>{elem.name}</h3>
+                          <p className='text-[#8f8d8f] text-lg '>{elem.postion}</p>
                         </div>
                         <FaQuoteRight className='text-3xl mt-3 text-[#05B4E1]' />
                       </div>

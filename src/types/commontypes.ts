@@ -113,3 +113,9 @@ export interface LoginForm{
     email: string, 
     password: string
 }
+
+export interface References {
+    name: string, 
+    postion: string, 
+    description: string
+}
